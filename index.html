@@ -3,21 +3,27 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Devbay Chatbot</title>
+  <title>DevBay Chatbot</title>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  
+
   <!-- Chatbot Button -->
   <div id="chatbot-btn">💬</div>
 
   <!-- Chatbot Popup -->
   <div id="chatbot-container">
     <div id="chat-header">
-      <span>Devbay Assistant</span>
+      <span>DevBay Assistant</span>
       <span id="close-chat">✖</span>
     </div>
-    <div id="chat-body"></div>
+
+    <!-- Chat Body Section -->
+    <div class="chat-wrapper">
+      <div id="chat-body"></div>
+    </div>
+
+    <!-- Chat Input Section -->
     <div id="chat-input">
       <input type="text" id="userInput" placeholder="Type your question...">
       <button id="sendBtn">Send</button>
@@ -27,24 +33,41 @@
   <!-- Chatbot Script -->
   <script>
     document.addEventListener("DOMContentLoaded", function() {
-      const chatBody = document.getElementById("chat-body");
       const chatbotBtn = document.getElementById("chatbot-btn");
       const chatbotContainer = document.getElementById("chatbot-container");
       const closeChat = document.getElementById("close-chat");
+      const chatBody = document.getElementById("chat-body");
+      const sendBtn = document.getElementById("sendBtn");
+      const userInput = document.getElementById("userInput");
 
-      // Show/Hide Chatbot
+      // Show chatbot
       chatbotBtn.addEventListener("click", () => {
         chatbotContainer.style.display = "block";
         chatbotBtn.style.display = "none";
-
-        // Clear chat body and trigger typing animation
         chatBody.innerHTML = "";
         typeWelcomeMessage();
       });
 
+      // Close chatbot
       closeChat.addEventListener("click", () => {
         chatbotContainer.style.display = "none";
         chatbotBtn.style.display = "block";
+      });
+
+      // Send user message
+      sendBtn.addEventListener("click", () => {
+        const message = userInput.value.trim();
+        if (message !== "") {
+          appendUserMessage(message);
+          userInput.value = "";
+        }
+      });
+
+      // Allow Enter key to send
+      userInput.addEventListener("keypress", (e) => {
+        if (e.key === "Enter") {
+          sendBtn.click();
+        }
       });
 
       // Typing animation for welcome message
@@ -60,16 +83,19 @@
           if (index < text.length) {
             messageDiv.innerHTML = text.substring(0, index + 1);
             index++;
-            scrollToBottom(messageDiv); // auto-scroll with message
-            setTimeout(type, 30); // typing speed
+            setTimeout(type, 30);
           }
         }
+
         type();
       }
 
-      // Auto scroll to bottom (now more reliable)
-      function scrollToBottom(element) {
-        element.scrollIntoView({ behavior: "smooth", block: "end" });
+      // Add user message with animation
+      function appendUserMessage(message) {
+        const userDiv = document.createElement("div");
+        userDiv.classList.add("user-message");
+        userDiv.textContent = message;
+        chatBody.appendChild(userDiv);
       }
     });
   </script>
@@ -77,3 +103,4 @@
   <script src="script.js"></script>
 </body>
 </html>
+
