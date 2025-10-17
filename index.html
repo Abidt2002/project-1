@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Devbay Chatbot</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  
+  <!-- Chatbot Button -->
+  <div id="chatbot-btn">💬</div>
+
+  <!-- Chatbot Popup -->
+  <div id="chatbot-container">
+    <div id="chat-header">
+      <span>Devbay Assistant</span>
+      <span id="close-chat">✖</span>
+    </div>
+    <div id="chat-body"></div>
+    <div id="chat-input">
+      <input type="text" id="userInput" placeholder="Type your question...">
+      <button id="sendBtn">Send</button>
+    </div>
+  </div>
+
+  <!-- Chatbot Script -->
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      const chatBody = document.getElementById("chat-body");
+      const chatbotBtn = document.getElementById("chatbot-btn");
+      const chatbotContainer = document.getElementById("chatbot-container");
+      const closeChat = document.getElementById("close-chat");
+
+      // Show/Hide Chatbot
+      chatbotBtn.addEventListener("click", () => {
+        chatbotContainer.style.display = "block";
+        chatbotBtn.style.display = "none";
+
+        // Show welcome message only once when chatbot opens
+        chatBody.innerHTML = `
+          <div class="bot-message">
+            💡 <strong>Innovation starts with a conversation.</strong><br>
+            Let’s build something extraordinary together — welcome to <strong>DevBay!</strong>
+          </div>
+        `;
+      });
+
+      closeChat.addEventListener("click", () => {
+        chatbotContainer.style.display = "none";
+        chatbotBtn.style.display = "block";
+      });
+    });
+  </script>
+
+  <script src="script.js"></script>
+</body>
+</html>
