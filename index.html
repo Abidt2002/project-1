@@ -37,19 +37,40 @@
         chatbotContainer.style.display = "block";
         chatbotBtn.style.display = "none";
 
-        // Show welcome message only once when chatbot opens
-        chatBody.innerHTML = `
-          <div class="bot-message">
-            💡 <strong>Innovation starts with a conversation.</strong><br>
-            Let’s build something extraordinary together — welcome to <strong>DevBay!</strong>
-          </div>
-        `;
+        // Clear chat body and trigger typing animation
+        chatBody.innerHTML = "";
+        typeWelcomeMessage();
       });
 
       closeChat.addEventListener("click", () => {
         chatbotContainer.style.display = "none";
         chatbotBtn.style.display = "block";
       });
+
+      // Typing animation for welcome message
+      function typeWelcomeMessage() {
+        const messageDiv = document.createElement("div");
+        messageDiv.classList.add("bot-message");
+        chatBody.appendChild(messageDiv);
+
+        const text = "💡 Innovation starts with a conversation. Let’s build something extraordinary together — welcome to DevBay!";
+        let index = 0;
+
+        function type() {
+          if (index < text.length) {
+            messageDiv.innerHTML = text.substring(0, index + 1);
+            index++;
+            scrollToBottom();
+            setTimeout(type, 30); // typing speed
+          }
+        }
+        type();
+      }
+
+      // Auto scroll to bottom
+      function scrollToBottom() {
+        chatBody.scrollTop = chatBody.scrollHeight;
+      }
     });
   </script>
 
