@@ -60,16 +60,16 @@
           if (index < text.length) {
             messageDiv.innerHTML = text.substring(0, index + 1);
             index++;
-            scrollToBottom();
+            scrollToBottom(messageDiv); // auto-scroll with message
             setTimeout(type, 30); // typing speed
           }
         }
         type();
       }
 
-      // Auto scroll to bottom
-      function scrollToBottom() {
-        chatBody.scrollTop = chatBody.scrollHeight;
+      // Auto scroll to bottom (now more reliable)
+      function scrollToBottom(element) {
+        element.scrollIntoView({ behavior: "smooth", block: "end" });
       }
     });
   </script>
